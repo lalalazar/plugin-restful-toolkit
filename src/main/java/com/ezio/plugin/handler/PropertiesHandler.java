@@ -42,26 +42,32 @@ public class PropertiesHandler {
         // TODO: Ezio 2020/1/14
         List<String> configFileNameList =
                 CONFIG_FILES.stream().flatMap(e -> FILE_SUFFIX.stream().map(c -> e + "." + c)).collect(Collectors.toList());
-        return configFileNameList.stream()
-                .map(this::findPsiFileInModule)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .findFirst()
-                .map(psiFile -> {
-                    if (psiFile.getName().contains(PROPERTIES_SUFFIX)) {
-                        Properties properties = getProperties(psiFile.getText());
-                        return properties.getProperty("server.port", RestServiceProject.DEFAULT_PORT);
-                    }
-                    if (psiFile.getName().contains(YAML_SUFFIX)) {
-                        Map<String, Object> yamlMap = getYamlMap(psiFile.getText());
-                        Map<String, Object> serverMap = (Map<String, Object>) yamlMap.getOrDefault("server", Maps.newHashMap());
-                        return Optional.ofNullable(serverMap.get("port"))
-                                .map(String::valueOf)
-                                .orElse(RestServiceProject.DEFAULT_PORT);
-                    }
-                    return RestServiceProject.DEFAULT_PORT;
-                })
-                .orElse(RestServiceProject.DEFAULT_PORT);
+        String port = "";
+        try {
+           port =   configFileNameList.stream()
+                    .map(this::findPsiFileInModule)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .findFirst()
+                    .map(psiFile -> {
+                        if (psiFile.getName().contains(PROPERTIES_SUFFIX)) {
+                            Properties properties = getProperties(psiFile.getText());
+                            return properties.getProperty("server.port", RestServiceProject.DEFAULT_PORT);
+                        }
+                        if (psiFile.getName().contains(YAML_SUFFIX)) {
+                            Map<String, Object> yamlMap = getYamlMap(psiFile.getText());
+                            Map<String, Object> serverMap = (Map<String, Object>) yamlMap.getOrDefault("server", Maps.newHashMap());
+                            return Optional.ofNullable(serverMap.get("port"))
+                                    .map(String::valueOf)
+                                    .orElse(RestServiceProject.DEFAULT_PORT);
+                        }
+                        return RestServiceProject.DEFAULT_PORT;
+                    })
+                    .orElse(RestServiceProject.DEFAULT_PORT);
+        } catch (Exception e) {
+            port = "8080";
+        }
+        return port;
     }
 
     private Map<String, Object> getYamlMap(String text) {

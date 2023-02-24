@@ -28,7 +28,8 @@
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-
+        <toolWindow id="APIHunter" secondary="true" icon="AllIcons.General.ProjectStructure" anchor="right"
+                    factoryClass="com.ezio.plugin.GUI.APIWindowFactory"/>
     </extensions>
 
     <actions>
@@ -43,7 +44,7 @@
         <action id="Ezio.GotoRequestMappingAction" class="com.ezio.plugin.navigator.action.GotoRequestMappingAction"
                 text="GotoRequestMappingAction"/>
 
-        <group id="Ezio.NavigatorToolbar">
+        <group id="NavigatorToolbar">
             <reference id="Ezio.RefreshProjectAction"/>
             <separator/>
         </group>
@@ -52,11 +53,13 @@
             <action id="Ezio.CopyUrlAction" class="com.ezio.plugin.navigator.action.CopyUrlAction"
                     text="Copy Full Url" icon="AllIcons.Actions.Copy" description="CopyUrlAction"/>
 
-            <action id="Ezio.CopyAsCurlAction" class="com.ezio.plugin.navigator.action.curl.CopyAsCurlAction"
+            <action id="Ezio.CopyAsCurlAction" class="com.ezio.plugin.navigator.action.CopyAsCurlAction"
                     text="Copy as cURL" description="CopyAsCurlAction"/>
         </group>
 
 
+        <action id="com.ezio.plugin.navigator.action.APIHunterRefreshToolAction" class="com.ezio.plugin.navigator.action.APIHunterRefreshToolAction"
+                text="Refresh APIHunter" description="APIHunterRefreshToolAction"/>
     </actions>
 
     <project-components>

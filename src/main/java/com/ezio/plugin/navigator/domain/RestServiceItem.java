@@ -37,6 +37,9 @@ public class RestServiceItem implements NavigationItem {
 
     private Navigatable navigationElement;
 
+    public RestServiceItem() {
+    }
+
     public RestServiceItem(PsiElement psiElement, String requestMethod, String urlPath) {
 
         this.psiElement = psiElement;
@@ -162,7 +165,8 @@ public class RestServiceItem implements NavigationItem {
             String fileName = psiElement.getContainingFile().getName();
             String location = null;
             if (psiElement instanceof PsiMethod) {
-                PsiMethod psiMethod = ((PsiMethod) psiElement);;
+                PsiMethod psiMethod = ((PsiMethod) psiElement);
+                ;
                 location = psiMethod.getContainingClass().getName().concat("#").concat(psiMethod.getName());
             }
             return "(" + location + ")";

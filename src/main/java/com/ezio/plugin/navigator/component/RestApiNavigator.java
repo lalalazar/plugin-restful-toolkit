@@ -1,5 +1,6 @@
 package com.ezio.plugin.navigator.component;
 
+import com.ezio.plugin.GUI.APIWindow;
 import com.ezio.plugin.constant.Icons;
 import com.ezio.plugin.utils.ToolkitUtils;
 import com.intellij.ide.util.treeView.TreeState;
@@ -61,11 +62,21 @@ public class RestApiNavigator implements ProjectComponent, PersistentStateCompon
     private void initStructure() {
         restApiStructure = new RestApiStructure(project, projectManager, simpleTree);
     }
+    private void initStructure(SimpleTree tree) {
+        restApiStructure = new RestApiStructure(project, projectManager, tree);
+    }
 
+    public void scheduleStructureUpdate(SimpleTree tree) {
+        DumbService.getInstance(project).smartInvokeLater(() -> {
+            if (!Optional.ofNullable(restApiStructure).isPresent()) {
+                initStructure(tree);
+            }
+            restApiStructure.update();
+        });
+    }
 
     public void scheduleStructureUpdate() {
         scheduleStructureRequest(() -> restApiStructure.update());
-
     }
 
     private void scheduleStructureRequest(Runnable r) {

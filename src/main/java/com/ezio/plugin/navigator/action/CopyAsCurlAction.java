@@ -1,6 +1,7 @@
-package com.ezio.plugin.navigator.action.curl;
+package com.ezio.plugin.navigator.action;
 
 import com.ezio.plugin.helper.PsiMethodHelper;
+import com.ezio.plugin.navigator.action.curl.CurlBuilder;
 import com.ezio.plugin.navigator.domain.RestServiceItem;
 import com.ezio.plugin.utils.LogUtils;
 import com.ezio.plugin.utils.RestApiDataKeys;
@@ -25,9 +26,6 @@ public class CopyAsCurlAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         Optional<RestServiceItem> optional = Objects.requireNonNull(RestApiDataKeys.SERVICE_ITEMS.getData(e.getDataContext()))
                 .stream().findFirst();
-
-
-
         if (optional.isPresent()) {
             RestServiceItem item = optional.get();
             PsiMethodHelper psiMethodHelper = new PsiMethodHelper(item.getPsiMethod(), item.getModule());

@@ -1,5 +1,6 @@
 package com.ezio.plugin.navigator.component;
 
+import com.ezio.plugin.GUI.APIWindow;
 import com.ezio.plugin.navigator.action.TreePopupHandler;
 import com.ezio.plugin.navigator.domain.RestServiceItem;
 import com.ezio.plugin.utils.RestApiDataKeys;
@@ -7,6 +8,8 @@ import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.DataProvider;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.SimpleToolWindowPanel;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.ScrollPaneFactory;
@@ -35,10 +38,9 @@ public class RestApiNavigatorPanel extends SimpleToolWindowPanel implements Data
         super(true, true);
         this.myTree = tree;
 
-        myTree.setBorder(BorderFactory.createLineBorder(new JBColor(new Color(11, 6, 39),
-                new Color(36, 38, 39))));
+//        myTree.setBorder(BorderFactory.createLineBorder(new JBColor(new Color(11, 6, 39), new Color(36, 38, 39))));
         JScrollPane scrollPane = ScrollPaneFactory.createScrollPane(myTree);
-        scrollPane.setBorder(BorderFactory.createLineBorder(JBColor.RED));
+//        scrollPane.setBorder(BorderFactory.createLineBorder(JBColor.RED));
 
         final ActionManager actionManager = ActionManager.getInstance();
         ActionToolbar actionToolbar = actionManager.createActionToolbar("API-LIST Navigator Toolbar",
@@ -54,7 +56,8 @@ public class RestApiNavigatorPanel extends SimpleToolWindowPanel implements Data
 //        splitter.setFirstComponent(scrollPane);
 //        //   splitter.setSecondComponent(myRestServiceDetail);
         setContent(scrollPane);
-        myTree.addMouseListener(new TreePopupHandler());
+        //todo test
+//        myTree.addMouseListener(new TreePopupHandler());
 
 //        myTree.addMouseListener(new MouseListener() {
 //            @Override

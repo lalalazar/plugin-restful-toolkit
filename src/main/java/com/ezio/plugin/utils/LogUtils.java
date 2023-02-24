@@ -11,12 +11,13 @@ import com.intellij.notification.Notifications;
  * created on 2020/3/5
  */
 public class LogUtils {
+    public final static String TITLE = "APIHunter helper";
 
     public static void showError(String content) {
-        Notifications.Bus.notify(new Notification("REST API Helper", "REST API Helper", content, NotificationType.ERROR));
+        Notifications.Bus.notify(new Notification(TITLE, TITLE, content, NotificationType.ERROR));
     }
 
     public static void showInfo(String content) {
-        Notifications.Bus.notify(new Notification("REST API Helper", "REST API Helper", content, NotificationType.INFORMATION));
+        Notifications.Bus.notify(new Notification(TITLE, TITLE, content, NotificationType.INFORMATION));
     }
 }

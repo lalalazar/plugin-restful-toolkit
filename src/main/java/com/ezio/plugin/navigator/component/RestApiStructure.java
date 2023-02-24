@@ -50,7 +50,7 @@ public class RestApiStructure extends SimpleTreeStructure implements Disposable 
         updateProjects(projects);
     }
 
-    private void updateProjects(List<RestServiceProject> projects) {
+    public void updateProjects(List<RestServiceProject> projects) {
         myRoot.updateProjectNodes(projects);
     }
 
@@ -149,7 +149,8 @@ public class RestApiStructure extends SimpleTreeStructure implements Disposable 
                 projectNodes.add(projectNode);
             }
 
-            updateFrom(getParent());
+//            updateFrom(getParent());
+            updateFrom(myRoot);
             childrenChanged();
         }
     }

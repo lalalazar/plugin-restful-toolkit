@@ -1,10 +1,14 @@
 package com.ezio.plugin.navigator.action;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ezio.plugin.GUI.APIWindow;
 import com.ezio.plugin.navigator.domain.RestServiceItem;
 import com.ezio.plugin.utils.LogUtils;
 import com.ezio.plugin.utils.RestApiDataKeys;
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.ide.CopyPasteManager;
 
 import java.awt.datatransfer.StringSelection;
@@ -21,12 +25,9 @@ public class CopyUrlAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-
-        Optional<RestServiceItem> optional = Objects.requireNonNull(RestApiDataKeys.SERVICE_ITEMS.getData(e.getDataContext()))
-                .stream().findFirst();
-
-        if (optional.isPresent()) {
-            CopyPasteManager.getInstance().setContents(new StringSelection(optional.get().getFullUrl()));
+        RestServiceItem restServiceItem = RestApiDataKeys.get();
+        if (ObjectUtil.isNotEmpty(restServiceItem)) {
+            CopyPasteManager.getInstance().setContents(new StringSelection(restServiceItem.getFullUrl()));
             LogUtils.showInfo("copied to pasteboard success");
         } else {
             LogUtils.showInfo("copied to pasteboard fail");
